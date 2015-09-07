@@ -1,6 +1,6 @@
 # backbone.turbo-where
 
-![](https://api.travis-ci.org/mllocs/backbone.turbo-where.svg) ![http://redbooth.com](https://www.dropbox.com/s/es9jhktdm65zr5r/built.svg?dl=1)
+![](https://api.travis-ci.org/mllocs/backbone.turbo-where.svg) <a href='http://redbooth.com' target='_blank'>![](https://www.dropbox.com/s/qo4yp1tpbsvqfya/made-at-redbooth-blue.svg?dl=1)</a>
 
 Backbone Collections with indexes.
 
