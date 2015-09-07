@@ -1,0 +1,15 @@
+{
+  "name": "backbone.turbo-where",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backbone.turbo-where.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha tests.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "backbone": "1.2.3",
+    "mocha": "2.3.0"
+  }
+}

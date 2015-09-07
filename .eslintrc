@@ -1,0 +1,89 @@
+# Environments
+# http://eslint.org/docs/configuring/#specifying-environments
+env:
+  browser: true
+
+# Globals
+# http://eslint.org/docs/configuring/#specifying-globals
+globals:
+  describe: true
+  it: true
+  require: true
+  before: true
+  module: true
+
+ecmaFeatures:
+  arrowFunctions: true
+  binaryLiterals: true
+  blockBindings: true
+  classes: false
+  defaultParams: true
+  destructuring: true
+  experimentalObjectRestSpread: true
+  forOf: true
+  generators: true
+  globalReturn: true
+  jsx: true
+  modules: true
+  objectLiteralComputedProperties: true
+  objectLiteralDuplicateProperties: true
+  objectLiteralShorthandMethods: true
+  objectLiteralShorthandProperties: true
+  octalLiterals: true
+  regexUFlag: true
+  regexYFlag: true
+  restParams: true
+  spread: true
+  superInFunctions: true
+  templateStrings: true
+  unicodeCodePointEscapes: true
+
+# Rules
+# http://eslint.org/docs/rules/
+rules:
+  # Possible Errors
+  # http://eslint.org/docs/rules/#possible-errors
+  no-comma-dangle: 0
+  no-console: 0
+
+  # Best Practices
+  # http://eslint.org/docs/rules/#best-practices
+
+  # Strict Mode
+  # http://eslint.org/docs/rules/#strict-mode
+  strict: [0, global] #FIXME
+  global-strict: [0, always] #FIXME
+
+  # Variables
+  # http://eslint.org/docs/rules/#variables
+  no-unused-vars: 0 #FIXME 771 errors
+  no-shadow: 0 #FIXME 117 errors
+
+  # Stylistic Issues
+  # http://eslint.org/docs/rules/#stylistic-issues
+  camelcase: 0
+  comma-style: [2]
+  eol-last: 2
+  indent: 0 #FIXME wtf eslint 1.1.0
+  key-spacing: 0 #FIXME disabled because inconsistent
+  new-cap: 0 #FIXME 54 errors
+  quotes: [0, single] #FIXME
+  no-multi-spaces: 0 #FIXME 356 errors
+  no-underscore-dangle: 0
+  one-var: 2
+  #max-len: [1, 100, 2] #FIXME muchos errors
+
+  no-sparse-arrays: 0 #FIXME
+  no-extra-boolean-cast: 0 #FIXME
+  consistent-return: 0 #FIXME
+  dot-notation: 0 #FIXME
+  no-mixed-requires: 0
+  no-multiple-empty-lines: [2, {max: 1}]
+  brace-style: [2, "1tbs", { "allowSingleLine": true }]
+  space-after-keywords: 2
+  space-before-function-paren: [2, {anonymous: "always", named: "never"}]
+  space-before-blocks: 2
+  space-unary-ops: 0
+  no-extra-strict: 0
+
+  curly: 0
