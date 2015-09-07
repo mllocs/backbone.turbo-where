@@ -1,5 +1,7 @@
 # backbone.turbo-where
 
+![](https://api.travis-ci.org/mllocs/backbone.turbo-where.svg)
+
 Backbone Collections with indexes.
 
 ## Usage
