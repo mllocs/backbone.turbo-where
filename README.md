@@ -11,7 +11,9 @@ var MyCollection = Backbone.Collection.extend({
   }
 });
 
-var my_collection.reset([
+var my_collection = new MyCollection();
+
+my_collection.reset([
   {id: 1, foreign_key: 11},
   {id: 2, foreign_key: 11},
   {id: 3, foreign_key: 11},
