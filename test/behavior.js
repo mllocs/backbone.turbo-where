@@ -1,6 +1,6 @@
 var assert = require('assert');
 var Backbone = require('backbone');
-var TurboWhere = require('./backbone.turbo-where.js');
+var TurboWhere = require('../backbone.turbo-where.js');
 var MyCollection;
 var my_collection;
 
