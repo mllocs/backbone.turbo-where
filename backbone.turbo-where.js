@@ -117,12 +117,12 @@
    * @return {Array<Backbone.Model>}
    */
   TurboWhere.prototype.turboWhere = function (filter, first) {
-    var keys = Object.keys(filter);
+    var keys = filter === Object(filter) ? Object.keys(filter) : [];
 
     if (keys.length === 1 && this.hasIndex(keys[0])) {
       return this.getModels(keys[0], filter[keys[0]], first);
     } else {
-      return this.collection.constructor.prototype.where.apply(this.collection, arguments);
+      return this.collection.constructor.prototype.where.call(this.collection, filter, first);
     }
   };
 
@@ -200,7 +200,9 @@
     collection.listenTo(collection, 'change', tw._onChange.bind(tw));
 
     collection.__tw__ = tw;
-    collection.where = tw.turboWhere.bind(tw);
+    collection.where = function (attrs, first) {
+      return tw.turboWhere(attrs, first);
+    };
   }
 
   return {setupIndexes: setupIndexes};
