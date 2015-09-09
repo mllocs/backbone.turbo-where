@@ -15,13 +15,20 @@ my_collection = new MyCollection();
 describe('Backbone.TurboWhere', function () {
   before(function () {
     my_collection.reset([
-      {id: 1, foreign_key: 11},
-      {id: 2, foreign_key: 11},
-      {id: 3, foreign_key: 11},
-      {id: 4, foreign_key: 22},
-      {id: 5, foreign_key: 22},
-      {id: 6, foreign_key: 22}
+      {id: 1, foreign_key: 11, other: 100},
+      {id: 2, foreign_key: 11, other: 200},
+      {id: 3, foreign_key: 11, other: 300},
+      {id: 4, foreign_key: 22, other: 400},
+      {id: 5, foreign_key: 22, other: 500},
+      {id: 6, foreign_key: 22, other: 600}
     ]);
+  });
+
+  it('works with findWhere', function () {
+    assert.equal(my_collection.findWhere({foreign_key: 22, id: 4}), my_collection.get(4));
+    assert.equal(my_collection.findWhere({foreign_key: 22, id: 999}), undefined);
+    assert.equal(my_collection.findWhere({foreign_key: 22, other: 999}), undefined);
+    assert.equal(my_collection.findWhere({foreign_key: 22, other: 500}), my_collection.get(5));
   });
 
   it('works after a reset', function () {
