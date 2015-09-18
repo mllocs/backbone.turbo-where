@@ -165,6 +165,8 @@
   TurboWhere.prototype._onChange = function (model) {
     var self = this;
 
+    if (!model) return;
+
     Object.keys(model.changed).forEach(function (key) {
       if (self.hasIndex(key)) {
         var previous = model.previous(key);
@@ -206,5 +208,4 @@
   }
 
   return {setupIndexes: setupIndexes};
-
 }));
