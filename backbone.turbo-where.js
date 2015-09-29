@@ -27,7 +27,7 @@
     return collection.reduce(function (memo, model) {
       var val = model.get(attr);
       memo[val] = memo[val] || [];
-      memo[val].push(model.id);
+      memo[val].push(model);
       return memo;
     }, {});
   }
@@ -101,12 +101,10 @@
    */
   TurboWhere.prototype.getModels = function (attr, value, first) {
     var self = this;
-    var ids = this.getIndex(attr)[value] || [];
+    var models = this.getIndex(attr)[value] || [];
 
-    if (first) return ids[0] ? self.collection.get(ids[0]) : void 0;
-    return ids.map(function (id) {
-      return self.collection.get(id);
-    });
+    if (first) return models[0] ? models[0] : void 0;
+    return models;
   };
 
   /**
@@ -135,10 +133,10 @@
     var self = this;
 
     Object.keys(this.indexes).forEach(function (key) {
-      var ids = self.indexes[key][model.get(key)];
-      ids = ids || [];
-      ids.push(model.id);
-      self.indexes[key][model.get(key)] = ids;
+      var models = self.indexes[key][model.get(key)];
+      models = models || [];
+      models.push(model);
+      self.indexes[key][model.get(key)] = models;
     });
   };
 
@@ -151,9 +149,9 @@
     var self = this;
 
     Object.keys(this.indexes).forEach(function (key) {
-      var ids = self.indexes[key][model.get(key)];
-      ids = removeFromArray(ids, model.id);
-      self.indexes[key][model.get(key)] = ids;
+      var models = self.indexes[key][model.get(key)];
+      models = removeFromArray(models, model);
+      self.indexes[key][model.get(key)] = models;
     });
   };
 
@@ -173,14 +171,14 @@
         var tmp;
 
         tmp = self.indexes[key][previous];
-        tmp = removeFromArray(tmp, model.id);
+        tmp = removeFromArray(tmp, model);
         self.indexes[key][previous] = tmp;
 
         var current = model.get(key);
 
         tmp = self.indexes[key][current];
         tmp = tmp || [];
-        tmp.push(model.id);
+        tmp.push(model);
         self.indexes[key][current] = tmp;
       }
     });
