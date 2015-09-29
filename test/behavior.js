@@ -36,6 +36,13 @@ describe('Backbone.TurboWhere', function () {
     assert.equal(my_collection.where({foreign_key: 22}).length, 3);
   });
 
+  it('works with models without id', function () {
+    var model = new Backbone.Model({foreign_key: 33});
+    my_collection.add(model);
+    assert.equal(my_collection.where({foreign_key: 33}).length, 1);
+    assert.equal(my_collection.findWhere({foreign_key: 33}), model);
+  });
+
   it('works after a delete', function () {
     my_collection.remove(1);
     assert.equal(my_collection.where({foreign_key: 11}).length, 2);
