@@ -11,7 +11,7 @@ var MyCollection = Backbone.Collection.extend({
   initialize: function () {
     Backbone.Collection.prototype.initialize.apply(this, arguments);
 
-    TurboWhere.setupIndexes(this, ['foreign_key']); <= API
+    TurboWhere.setupIndexes(this, ['foreign_key']); // <= API
   }
 });
 
