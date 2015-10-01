@@ -203,6 +203,8 @@
     collection.where = function (attrs, first) {
       return tw.turboWhere(attrs, first);
     };
+
+    tw.indexBuilder.apply(tw, indexes); // Initial index
   }
 
   return {setupIndexes: setupIndexes};
