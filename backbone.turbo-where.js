@@ -76,6 +76,18 @@
   };
 
   /**
+   * Return true if the indexes exists
+   *
+   * @param  {Array<String>} attrs
+   * @return {Boolean}
+   */
+  TurboWhere.prototype.hasIndexes = function (attrs) {
+    var self = this;
+
+    return attrs.reduce(function(memo, attr){ return self.hasIndex(attr);}, true);
+  };
+
+  /**
    * Returns a function that builds the index for the given attributes
    *
    * @param  {Array<String>} attrs
@@ -96,15 +108,34 @@
    *
    * @param  {String} attr
    * @param  {*}      value
-   * @param  {Boolean} first
    * @return {Array<Backbone.Model>}
    */
-  TurboWhere.prototype.getModels = function (attr, value, first) {
+  TurboWhere.prototype.getModels = function (attr, value) {
     var self = this;
     var models = this.getIndex(attr)[value] || [];
 
-    if (first) return models[0] ? models[0] : void 0;
     return models;
+  };
+
+  /**
+   * Return the models using the index
+   *
+   * @param {Array<Backbone.Model>} array
+   * @return {Array<Backbone.Model>}
+   */
+  TurboWhere.prototype.intersection = function(array) {
+    var result = [];
+    var argsLength = arguments.length;
+    for (var i = 0, length = array.length; i < length; i++) {
+      var item = array[i];
+      if (result.indexOf(item) >= 0) continue;
+      var j;
+      for (j = 1; j < argsLength; j++) {
+        if (arguments[j].indexOf(item) < 0) break;
+      }
+      if (j === argsLength) result.push(item);
+    }
+    return result;
   };
 
   /**
@@ -115,10 +146,18 @@
    * @return {Array<Backbone.Model>}
    */
   TurboWhere.prototype.turboWhere = function (filter, first) {
+    var self = this;
     var keys = filter === Object(filter) ? Object.keys(filter) : [];
+    var values;
 
-    if (keys.length === 1 && this.hasIndex(keys[0])) {
-      return this.getModels(keys[0], filter[keys[0]], first);
+    if (keys.length > 0 && this.hasIndexes(keys)) {
+      values = this.intersection.apply(this, keys.map(function(key){
+        return self.getModels(key, filter[key]);
+      }));
+
+      if (first) return values[0] ? values[0] : void 0;
+
+      return values;
     } else {
       return this.collection.constructor.prototype.where.call(this.collection, filter, first);
     }
@@ -203,6 +242,8 @@
     collection.where = function (attrs, first) {
       return tw.turboWhere(attrs, first);
     };
+
+    tw.indexBuilder.apply(tw, indexes); // Initial index
   }
 
   return {setupIndexes: setupIndexes};

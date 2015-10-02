@@ -9,13 +9,13 @@ Get faster reads in Backbone Collections using indexes. The indexes will be calc
 ```js
 var MyCollection = Backbone.Collection.extend({
   initialize: function () {
-    TurboWhere.setupIndexes(this, ['foreign_key']); <= API
+    Backbone.Collection.prototype.initialize.apply(this, arguments);
+
+    TurboWhere.setupIndexes(this, ['foreign_key']); // <= API
   }
 });
 
-var my_collection = new MyCollection();
-
-my_collection.reset([
+var my_collection = new MyCollection([
   {id: 1, foreign_key: 11},
   {id: 2, foreign_key: 11},
   {id: 3, foreign_key: 11},
@@ -30,30 +30,4 @@ my_collection.remove(1) // <= will update the index
 
 var model = my_collection.get(2);
 model.set({foreign_key: 44}); // <= will update the index
-```
-
-## Gotcha
-
-Since the library relies in the `reset` event, the indexes won't be setted up if we initialize the collection with the constructor.
-
-### Bad
-
-```js
-var my_collection = new MyCollection({
-  {id: 1, foreign_key: 11},
-  {id: 2, foreign_key: 22},
-  {id: 3, foreign_key: 33}
-});
-```
-
-### Good
-
-```js
-var my_collection = new MyCollection();
-
-my_collection.reset({
-  {id: 1, foreign_key: 11},
-  {id: 2, foreign_key: 22},
-  {id: 3, foreign_key: 33}
-});
 ```
