@@ -8,7 +8,7 @@ MyCollection = Backbone.Collection.extend({
   initialize: function () {
     Backbone.Collection.prototype.initialize.apply(this, arguments);
 
-    TurboWhere.setupIndexes(this, ['foreign_key']);
+    TurboWhere.setupIndexes(this, ['foreign_key', 'other_foreign_key']);
   }
 });
 
@@ -31,12 +31,12 @@ describe('Backbone.TurboWhere', function () {
 
   it('works after a reset', function () {
     my_collection.reset([
-      {id: 1, foreign_key: 11, other: 100},
-      {id: 2, foreign_key: 11, other: 200},
-      {id: 3, foreign_key: 33, other: 300},
-      {id: 4, foreign_key: 22, other: 400},
-      {id: 5, foreign_key: 22, other: 500},
-      {id: 6, foreign_key: 33, other: 600}
+      {id: 1, foreign_key: 11, other: 100, other_foreign_key: 99},
+      {id: 2, foreign_key: 11, other: 200, other_foreign_key: 99},
+      {id: 3, foreign_key: 33, other: 300, other_foreign_key: 99},
+      {id: 4, foreign_key: 22, other: 400, other_foreign_key: 99},
+      {id: 5, foreign_key: 22, other: 500, other_foreign_key: 99},
+      {id: 6, foreign_key: 33, other: 600, other_foreign_key: 99}
     ]);
     assert.equal(my_collection.where({foreign_key: 11}).length, 2);
     assert.equal(my_collection.where({foreign_key: 22}).length, 2);
@@ -83,5 +83,10 @@ describe('Backbone.TurboWhere', function () {
     assert.equal(my_collection.where({foreign_key: 11}).length, 2);
     assert.equal(my_collection.where({foreign_key: 22}).length, 1);
     assert.equal(my_collection.where({foreign_key: 44}).length, 1);
+  });
+
+  it('works with multiple indexes', function () {
+    assert.equal(my_collection.where({foreign_key: 11, other_foreign_key: 99}).length, 1);
+    assert.equal(my_collection.where({foreign_key: 22, other_foreign_key: 99}).length, 1);
   });
 });
